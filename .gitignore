@@ -1,2 +1,4 @@
 credentials.txt
 ivona_credentials.txt
+
+*.pyc

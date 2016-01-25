@@ -1,0 +1,14 @@
+<html>
+<body>
+<h1>Hello Loyce!</h1>
+
+  <form action="" method="post" name="search">
+      {{ form.hidden_tag() }}
+      <p>
+          What do they say about: {{ form.query(size=40) }} ?<br>
+      </p>
+      <p>I want to see {{ form.count }} tweets! </p>
+      <p><input type="submit" value="Search tweets"></p>
+  </form>
+</body>
+</html>

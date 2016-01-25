@@ -40,4 +40,4 @@ def search_last_tweets(query, tweets_number):
 
 api = init_twitter_api()
 ivona = init_ivona()
-search_last_tweets('Donald Trump', 5)
+# search_last_tweets('Donald Trump', 5)

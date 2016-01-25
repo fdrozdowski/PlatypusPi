@@ -1,13 +1,11 @@
 from flask import Flask, render_template, redirect
 from forms import SearchForm
-from piteddy import *
-
+from piteddy import PiTeddy
 
 
 app = Flask(__name__)
 app.config.from_object('config')
-api = init_twitter_api()
-ivona = init_ivona()
+teddy = PiTeddy()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -17,9 +15,9 @@ def index():
       query = form.query.data
       count = form.count.data
       print('Search for="%s", #times=%s' % (query, str(count)))
-      search_last_tweets(query, count)
+      teddy.play_tweets(query, count)
       return redirect('/')
-      
+
     return render_template('index.html', 
                            title='Search Tweets',
                            form=form)

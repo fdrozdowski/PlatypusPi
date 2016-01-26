@@ -2,3 +2,5 @@ credentials.txt
 ivona_credentials.txt
 
 *.pyc
+
+nyt_credentials.txt

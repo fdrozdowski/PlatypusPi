@@ -1,14 +1,27 @@
 <html>
 <body>
-<h1>Hello Loyce!</h1>
+<h1>Hello Loyce, it's your Pi Beaver! </h1>
+  
+  <h2>How can I help you today? </h2>
 
-  <form action="" method="post" name="search">
+  <form action="" method="post" name="search_twitter">
       {{ form.hidden_tag() }}
       <p>
-          What do they say about: {{ form.query(size=40) }} ?<br>
+          Tell me what Twitter says about: {{ form.query(size=40) }} ?<br>
       </p>
-      <p>I want to see {{ form.count }} tweets! </p>
-      <p><input type="submit" value="Search tweets"></p>
+      <p>I want to hear {{ form.count }} tweets! </p>
+      <p><input name="twitter" type="submit" value="Search tweets"></p>
   </form>
+
+  <form action="" method="post" name="search_nyt">
+    {{ form.hidden_tag() }}
+    <p>
+        Tell me what NYT says about: {{ form.query(size=40) }} ?<br>
+    </p>
+    <p>I want to hear {{ form.count }} article snippets! </p>
+
+    <p><input name="nyt" type="submit" value="Search NYT"></p>
+  </form>
+
 </body>
 </html>

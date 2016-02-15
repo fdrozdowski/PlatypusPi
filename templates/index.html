@@ -1,27 +1,65 @@
 <html>
 <body>
-<h1>Hello Loyce, it's your Pi Beaver! </h1>
-  
+<center>
+  <h1>Hello Loyce, it's your Platypus Pi<strike> e </strike>! </h1>
+
   <h2>How can I help you today? </h2>
 
   <form action="" method="post" name="search_twitter">
       {{ form.hidden_tag() }}
       <p>
-          Tell me what Twitter says about: {{ form.query(size=40) }} ?<br>
+          Tell me what Twitter says about: {{ form.query(size=30) }}. <br>
       </p>
-      <p>I want to hear {{ form.count }} tweets! </p>
+      <p>I want to hear {{ form.count(size=6) }} tweets! </p>
       <p><input name="twitter" type="submit" value="Search tweets"></p>
   </form>
 
   <form action="" method="post" name="search_nyt">
     {{ form.hidden_tag() }}
     <p>
-        Tell me what NYT says about: {{ form.query(size=40) }} ?<br>
+        Tell me what NYT says about: {{ form.query(size=30) }}. <br>
     </p>
-    <p>I want to hear {{ form.count }} article snippets! </p>
+    <p>I want to hear {{ form.count(size=6) }} article snippets! </p>
 
-    <p><input name="nyt" type="submit" value="Search NYT"></p>
+    <p><input name="nyt" type="submit" value="Search NYT articles"></p>
   </form>
+  NYT Top Stories? Just choose a section: <br>
+  <select id="section" name="section">
+    <option value="home">home</option>
+    <option value="world">world</option>
+    <option value="national">national</option>
+    <option value="politics">politics</option>
+    <option value="nyregion">nyregion</option>
+    <option value="business">business</option>
+    <option value="opinion">opinion</option>
+    <option value="technology">technology</option>
+    <option value="science">science</option>
+    <option value="health">health</option>
+    <option value="sports">sports</option>
+    <option value="arts">arts</option>
+    <option value="fashion">fashion</option>
+    <option value="dining">dining</option>
+    <option value="travel">travel</option>
+    <option value="magazine">magazine</option>
+    <option value="realestate">real estate</option>
+  </select>
+   and number of stories: 
+  <input id="storyCount" type="number" step="1" min="1" max="20"> </input> 
+  <br>
+  <button type="button" onclick="searchTopStories()">Let me hear them</button>
+</center>
+<script>
+function searchTopStories() {
+  var section = document.getElementById("section");
+  var count = document.getElementById("storyCount");
+  var nytSection = section.options[section.selectedIndex].value;
+  console.log(count.value);
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "topstories", true);
+  xhttp.setRequestHeader('Content-Type', 'application/json');
+  xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
 
+}
+</script>
 </body>
 </html>

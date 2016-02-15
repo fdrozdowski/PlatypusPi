@@ -1,11 +1,12 @@
 from flask import Flask, render_template, redirect, request
 from forms import SearchForm
-from piteddy import PiTeddy
+from platypus import PlatypusPi
+import json
 
 
 app = Flask(__name__)
 app.config.from_object('config')
-teddy = PiTeddy()
+platypus = PlatypusPi()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -18,14 +19,25 @@ def index():
     count = form.count.data
     print('Search for="%s", #times=%s' % (query, str(count)))
     if 'nyt' in request.form:
-      teddy.play_news(count, query)
+      platypus.play_nyt_articles(query, count)
     if 'twitter' in request.form:
-      teddy.play_tweets(query, count)
+      platypus.play_tweets(query, count)
     return redirect('/')
 
   return render_template('index.html', 
                          title='Search Tweets',
                          form=form)
+
+@app.route('/topstories', methods=['POST'])
+def top_stories():
+  
+  json_data = request.data
+  data_dict = json.loads(json_data)
+  nytSection = data_dict['section']
+  count = data_dict['count']
+  print nytSection + " " + count
+  platypus.play_nyt_topstories(nytSection, int(count))
+  return "OK"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

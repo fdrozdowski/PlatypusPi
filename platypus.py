@@ -55,6 +55,14 @@ class PlatypusPi:
           creds[name.strip()] = value.strip()
     return creds
 
+  def change_voice(self, name):
+    if name in ['Brian', 'Amy', 'Emma', 'Raveena', 'Gwyneth', 'Geraint',
+     'Nicole', 'Russell', 'Justin', 'Salli', 'Joey', 'Kimberly', 'Kendra',
+     'Eric', 'Jennifer', 'Ivy', 'Chipmunk']:
+      self.ivona.voice_name = name  
+    else:
+      self.ivona.speak("Incorrect Ivona name provided.")  
+
   def play_tweets(self, query, count):
 
     if count < 1:
@@ -93,13 +101,19 @@ class PlatypusPi:
 
     if section not in self.nyt_sections:
       self.ivona.speak('Incorrect New York Times section name provided.')
-      return "Incorrect section name"
+      return 'Incorrect section name'
 
     articles = r = requests.get('http://api.nytimes.com/svc/topstories/v1/' + 
       section + '.json?api-key=' + self.nyt_topstories_key)
 
+    articles_list = articles.json()['results']
+
+    if len(articles_list) == 0:
+      self.ivona.speak('No articles found in this section.')
+      return 'No articles found in this section'
+
     counter = 0
-    for article in articles.json()['results']:
+    for article in articles_list:
      
       title = article['title']
       abstract = article['abstract']

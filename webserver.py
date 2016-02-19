@@ -39,5 +39,11 @@ def top_stories():
   platypus.play_nyt_topstories(nytSection, int(count))
   return "OK"
 
+@app.route('/change_voice', methods=['POST'])
+def change_voice():
+  voice_name = request.data
+  platypus.change_voice(voice_name)
+  return "OK"
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

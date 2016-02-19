@@ -57,6 +57,31 @@
       <p>
         <button type="button" onclick="searchTopStories()">Let me hear them</button>
       </p>
+
+      <p>Tired of my voice? Check out the English voices on <a href="https://www.ivona.com/">Ivona</a> and choose the one you like:</p>
+      <p>
+        <select id="voice" name="voice">
+          <option value="Brian">Brian - British EN</option>
+          <option value="Amy">Amy - British EN</option>
+          <option value="Emma">Emma - British EN</option>
+          <option value="Raveena">Raveena - Indian EN</option>
+          <option value="Gwyneth">Gwyneth - Welsh EN</option>
+          <option value="Geraint">Geraint - Welsh EN</option>
+          <option value="Nicole">Nicole - Australian EN</option>
+          <option value="Russell">Russell - Australian EN</option>
+          <option value="Justin">Justin - American EN</option>
+          <option value="Salli">Salli - American EN</option>
+          <option value="Joey">Joey - American EN</option>
+          <option value="Kimberly">Kimberly - American EN</option>
+          <option value="Kendra">Kendra - American EN</option>
+          <option value="Eric">Eric - American EN</option>
+          <option value="Jennifer">Jennifer - American EN</option>
+          <option value="Ivy">Ivy - American EN</option>
+          <option value="Chipmunk">Chipmunk - American EN</option>
+        </select>
+
+        <button type="button" onclick="changeVoice()">Change my voice</button>
+      </p>
     
     </div>
   </div>
@@ -72,6 +97,17 @@
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
 
+  }
+
+  function changeVoice() {
+    var voice = document.getElementById("voice");
+    var ivonaVoiceName = voice.options[voice.selectedIndex].value;
+    console.log(ivonaVoiceName);
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "change_voice", true);
+    xhttp.send(ivonaVoiceName); 
+    //xhttp.setRequestHeader('Content-Type', 'application/json');
+    //xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
   }
   </script>
 </body>

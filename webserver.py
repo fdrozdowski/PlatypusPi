@@ -51,5 +51,12 @@ def change_speech_rate():
   platypus.change_speech_rate(speech_rate)
   return "OK"  
 
+@app.route('/focus', methods=['GET'])
+def focus_alarm():
+
+  print "focus"
+  platypus.focus()
+  return "OK"    
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

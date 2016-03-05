@@ -68,6 +68,9 @@ class PlatypusPi:
     else:
       self.ivona.speak("Incorrect Ivona speech rate provided.")
 
+  def focus(self):
+    self.ivona.speak("Loyce!!! Focus!!!");
+
   def play_tweets(self, query, count):
 
     if count < 1:

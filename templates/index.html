@@ -58,6 +58,13 @@
         <button type="button" onclick="searchTopStories()">Let me hear them</button>
       </p>
 
+      <p>
+        Turn on focus alarm every 
+        <input id="focusRate" type="number" step="1" min="1" max="90"> </input> minutes
+        <button type="button" onclick="focusAlarm(true)">Focus!</button>
+        <button type="button" onclick="focusAlarm(false)">Enough!</button>
+      </p>
+
       <p>Tired of my voice? Check out the English voices on <a href="https://www.ivona.com/">Ivona</a> and choose the one you like:</p>
       <p>
         <select id="voice" name="voice">
@@ -99,37 +106,61 @@
   </div>
 
   <script>
-  function searchTopStories() {
-    var section = document.getElementById("section");
-    var count = document.getElementById("storyCount");
-    var nytSection = section.options[section.selectedIndex].value;
-    console.log(count.value);
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "topstories", true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
+    function searchTopStories() {
+      var section = document.getElementById("section");
+      var count = document.getElementById("storyCount");
+      var nytSection = section.options[section.selectedIndex].value;
+      console.log(count.value);
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", "topstories", true);
+      xhttp.setRequestHeader('Content-Type', 'application/json');
+      xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
 
-  }
+    }
 
-  function changeVoice() {
-    var voice = document.getElementById("voice");
-    var ivonaVoiceName = voice.options[voice.selectedIndex].value;
-    console.log(ivonaVoiceName);
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "change_voice", true);
-    xhttp.send(ivonaVoiceName); 
-    //xhttp.setRequestHeader('Content-Type', 'application/json');
-    //xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
-  }
+    function changeVoice() {
+      var voice = document.getElementById("voice");
+      var ivonaVoiceName = voice.options[voice.selectedIndex].value;
+      console.log(ivonaVoiceName);
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", "change_voice", true);
+      xhttp.send(ivonaVoiceName); 
+      //xhttp.setRequestHeader('Content-Type', 'application/json');
+      //xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
+    }
 
-  function changeSpeechRate() {
-    var rate = document.getElementById("rate");
-    var speechRate = rate.options[rate.selectedIndex].value;
-    console.log(speechRate);
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "change_speech_rate", true);
-    xhttp.send(speechRate); 
-  }
-   </script>
+    function changeSpeechRate() {
+      var rate = document.getElementById("rate");
+      var speechRate = rate.options[rate.selectedIndex].value;
+      console.log(speechRate);
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", "change_speech_rate", true);
+      xhttp.send(speechRate); 
+    }
+
+    var timeoutID = -1;
+
+    function focusAlarm(turnOn) {
+      if (turnOn) {
+        if (timeoutID != -1)
+          clearTimeout(timeoutID);
+        playFocusSound();
+      }
+      else {
+        if (timeoutID != -1)
+          clearTimeout(timeoutID);
+          timeoutID = -1;
+      }
+    }
+
+    function playFocusSound() {
+      var focusRate = document.getElementById("focusRate").value;
+      console.log("focus rate " + focusRate);
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "focus", true);
+      xhttp.send(); 
+      timeoutID = setTimeout(playFocusSound, focusRate * 60000);
+    }
+  </script>
 </body>
 </html>

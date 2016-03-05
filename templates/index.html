@@ -82,6 +82,18 @@
 
         <button type="button" onclick="changeVoice()">Change my voice</button>
       </p>
+
+      <p>
+        <select id="rate" name="rate">
+          <option value="x-slow">extra slow</option>
+          <option value="slow">slow</option>
+          <option value="medium">medium</option>
+          <option value="fast">fast</option>
+          <option value="x-fast">extra fast</option>
+        </select>
+
+        <button type="button" onclick="changeSpeechRate()">Change speech rate</button>
+      </p>
     
     </div>
   </div>
@@ -109,6 +121,15 @@
     //xhttp.setRequestHeader('Content-Type', 'application/json');
     //xhttp.send(JSON.stringify({ "section": nytSection, "count": count.value }));
   }
-  </script>
+
+  function changeSpeechRate() {
+    var rate = document.getElementById("rate");
+    var speechRate = rate.options[rate.selectedIndex].value;
+    console.log(speechRate);
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "change_speech_rate", true);
+    xhttp.send(speechRate); 
+  }
+   </script>
 </body>
 </html>

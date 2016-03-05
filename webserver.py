@@ -45,5 +45,11 @@ def change_voice():
   platypus.change_voice(voice_name)
   return "OK"
 
+@app.route('/change_speech_rate', methods=['POST'])
+def change_speech_rate():
+  speech_rate = request.data
+  platypus.change_speech_rate(speech_rate)
+  return "OK"  
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

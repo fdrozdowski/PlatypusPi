@@ -29,7 +29,6 @@ class PlatypusPi:
     creds = self.read_credentials('ivona_credentials.txt')
     voice = pyvona.create_voice(creds['access_key'], creds['secret_key'])
     voice.voice_name = 'Brian'
-    voice.speech_rate = 'slow'
     return voice
 
   def init_nyt_articles(self):
@@ -62,6 +61,12 @@ class PlatypusPi:
       self.ivona.voice_name = name  
     else:
       self.ivona.speak("Incorrect Ivona name provided.")  
+
+  def change_speech_rate(self, rate):
+    if rate in ['x-slow', 'slow', 'medium', 'fast', 'x-fast']:
+      self.ivona.speech_rate = rate
+    else:
+      self.ivona.speak("Incorrect Ivona speech rate provided.")
 
   def play_tweets(self, query, count):
 

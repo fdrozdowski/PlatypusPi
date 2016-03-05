@@ -4,6 +4,7 @@ import os
 import nytimes
 import time
 import requests
+import json
 
 
 
@@ -13,6 +14,7 @@ class PlatypusPi:
     self.ivona = self.init_ivona()
     self.nyt_articles = self.init_nyt_articles()
     self.nyt_topstories_key = self.init_nyt_topstories()
+    self.weather_api_key = self.init_weather_api()
     self.nyt_sections = ["home", "world", "national", "politics", "nyregion",
       "business", "opinion", "technology", "science", "health", "sports",
       "arts", "fashion", "dining", "travel", "magazine", "realestate"]
@@ -41,6 +43,11 @@ class PlatypusPi:
     stories_api_key = creds['top_stories_api_key']
     return stories_api_key  
 
+  def init_weather_api(self):
+    creds = self.read_credentials('weather_api_credentials.txt')
+    weather_api_key = creds['api_key']  
+    return weather_api_key
+
   def read_credentials(self, filename):
     if filename is None:
       path = os.path.dirname(__file__)
@@ -60,16 +67,23 @@ class PlatypusPi:
      'Eric', 'Jennifer', 'Ivy', 'Chipmunk']:
       self.ivona.voice_name = name  
     else:
-      self.ivona.speak("Incorrect Ivona name provided.")  
+      self.ivona.speak('Incorrect Ivona name provided.')  
 
   def change_speech_rate(self, rate):
     if rate in ['x-slow', 'slow', 'medium', 'fast', 'x-fast']:
       self.ivona.speech_rate = rate
     else:
-      self.ivona.speak("Incorrect Ivona speech rate provided.")
+      self.ivona.speak('Incorrect Ivona speech rate provided.')
 
   def focus(self):
-    self.ivona.speak("Loyce!!! Focus!!!");
+    self.ivona.speak('Loyce!!! Focus!!!');
+
+  def play_current_weather(self):
+    weather = json.loads(requests.get('http://api.openweathermap.org/data/2.5/weather?q=Austin,TX&units=imperial&appid=' + self.weather_api_key).content)['main']
+
+    weather_text = 'Current temperature: ' + str(weather['temp']) + ' degrees. Current humidity: ' + str(weather['humidity']) + ' percent. Current pressure: ' + str(weather['pressure']) + ' hectopascals.'
+
+    self.ivona.speak('Here is the weather for Austin, Texas. ' + weather_text)
 
   def play_tweets(self, query, count):
 

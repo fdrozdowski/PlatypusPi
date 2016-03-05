@@ -64,6 +64,9 @@
         <button type="button" onclick="focusAlarm(true)">Focus!</button>
         <button type="button" onclick="focusAlarm(false)">Enough!</button>
       </p>
+      <p>
+        <button type="button" onclick="getWeather()">Get current weather </button>
+      </p>
 
       <p>Tired of my voice? Check out the English voices on <a href="https://www.ivona.com/">Ivona</a> and choose the one you like:</p>
       <p>
@@ -160,6 +163,12 @@
       xhttp.open("GET", "focus", true);
       xhttp.send(); 
       timeoutID = setTimeout(playFocusSound, focusRate * 60000);
+    }
+
+    function getWeather() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "weather", true);
+      xhttp.send(); 
     }
   </script>
 </body>

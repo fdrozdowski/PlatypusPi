@@ -4,3 +4,5 @@ ivona_credentials.txt
 *.pyc
 
 nyt_credentials.txt
+
+weather_api_credentials.txt
